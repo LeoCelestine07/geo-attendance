@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function calculateDistance(lat1, lon1, lat2, lon2) {
             const R = 6371; // Radius of the Earth in km
             const dLat = degreesToRadians(lat2 - lat1);
-            const dLon = degreesToRadians(lat2 - lon1);
+            const dLon = degreesToRadians(lon2 - lon1);
             const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                 Math.cos(degreesToRadians(lat1)) * Math.cos(degreesToRadians(lat2)) *
                 Math.sin(dLon / 2) * Math.sin(dLon / 2);
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function saveMessages(name, time) {
-        var newAttendanceForm = attendanceFormDB.push();
+        var newAttendanceForm = firebase.database().ref('attendanceForm').push();
         newAttendanceForm.set({
             name: name,
             time: time,
