@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('markAttendance').addEventListener('click', (e) => {
         e.preventDefault();
-        console.log("Mark Attendance button clicked");
+        console.log("Mark Attendance button clicked");  // Debugging log
 
         const employeeSelect = document.getElementById('employeeName');
         const employeeName = employeeSelect ? employeeSelect.value : null;
 
         if (!employeeName) {
-            console.log("Employee name not selected");
+            console.log("Employee name not selected");  // Debugging log
             document.getElementById('status').innerText = 'Please select an employee.';
             return;
         }
@@ -20,18 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
         navigator.geolocation.getCurrentPosition(success, error);
 
         function success(position) {
-            console.log("Geolocation success");
+            console.log("Geolocation success");  // Debugging log
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
-            console.log("Latitude:", latitude, "Longitude:", longitude); // Debugging log
 
             // Office coordinates
             const officeLatitude = 12.913278;
             const officeLongitude = 80.194500;
-            console.log("Office Latitude:", officeLatitude, "Office Longitude:", officeLongitude); // Debugging log
 
             const distance = calculateDistance(latitude, longitude, officeLatitude, officeLongitude);
-            console.log("Calculated Distance:", distance); // Debugging log
 
             if (distance <= 1) { // 1 km radius
                 const now = new Date();
@@ -46,14 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function error() {
-            console.log("Geolocation error");
+            console.log("Geolocation error");  // Debugging log
             alert('Unable to retrieve your location');
         }
 
         function calculateDistance(lat1, lon1, lat2, lon2) {
             const R = 6371; // Radius of the Earth in km
             const dLat = degreesToRadians(lat2 - lat1);
-            const dLon = degreesToRadians(lon2 - lon1);
+            const dLon = degreesToRadians(lat2 - lon1);
             const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                 Math.cos(degreesToRadians(lat1)) * Math.cos(degreesToRadians(lat2)) *
                 Math.sin(dLon / 2) * Math.sin(dLon / 2);
