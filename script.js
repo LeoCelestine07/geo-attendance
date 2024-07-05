@@ -38,7 +38,6 @@ document.getElementById('markAttendance').addEventListener('click', () => {
             }).then(() => {
                 document.getElementById('status').innerText = `${employeeName} marked present on ${formattedDateTime}`;
             }).catch((error) => {
-                console.error('Error adding document:', error);
                 document.getElementById('status').innerText = `Error adding document: ${error}`;
             });
         } else {
