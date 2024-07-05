@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const getElementVal = (id) => {
+        console.log("Getting value for:", id);  // Debugging log
         return document.getElementById(id).value;
     };
 });
