@@ -1,6 +1,3 @@
-import { addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-import { db } from './firebase-config.js';
-
 document.getElementById('markAttendance').addEventListener('click', () => {
     const employeeSelect = document.getElementById('employee');
     const employeeName = employeeSelect.value;
@@ -30,16 +27,7 @@ document.getElementById('markAttendance').addEventListener('click', () => {
         if (distance <= 1) { // 1 km radius
             const now = new Date();
             const formattedDateTime = now.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-
-            addDoc(collection(db, "attendance"), {
-                name: employeeName,
-                timestamp: serverTimestamp(),
-                location: `${latitude}, ${longitude}`
-            }).then(() => {
-                document.getElementById('status').innerText = `${employeeName} marked present on ${formattedDateTime}`;
-            }).catch((error) => {
-                document.getElementById('status').innerText = `Error adding document: ${error}`;
-            });
+            document.getElementById('status').innerText = `${employeeName} marked present on ${formattedDateTime}`;
         } else {
             document.getElementById('status').innerText = 'You are not within the required location radius.';
         }
@@ -64,3 +52,4 @@ document.getElementById('markAttendance').addEventListener('click', () => {
         return degrees * (Math.PI / 180);
     }
 });
+
