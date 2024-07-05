@@ -14,7 +14,7 @@
 <body>
     <div class="container">
         <h1>Knockturn Geo Attendance - V6</h1>
-        <form id="attendanceForm">
+        <form id="attendanceForm" style="display: none;">
             <div class="form-group">
                 <label for="employeeName">Select Employee:</label>
                 <select id="employeeName">
@@ -31,8 +31,10 @@
             <button id="markAttendance" type="submit">Mark Attendance</button>
             <div id="status"></div>
         </form>
+        <button id="registerBioAuth" style="display: none;">Register Biometric Authentication</button>
     </div>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="script.js"></script>
