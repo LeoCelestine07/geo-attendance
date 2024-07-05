@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
             navigator.geolocation.getCurrentPosition(success, error);
 
             async function success(position) {
+                console.log("Geolocation success");
+
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
 
@@ -54,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             function error() {
+                console.log("Geolocation error");
                 alert('Unable to retrieve your location');
             }
 
