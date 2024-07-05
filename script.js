@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("Latitude:", latitude, "Longitude:", longitude); // Debugging log
 
             // Office coordinates
-            const officeLatitude = 22.913278;
-            const officeLongitude = 90.194500;
+            const officeLatitude = 12.913278;
+            const officeLongitude = 80.194500;
             console.log("Office Latitude:", officeLatitude, "Office Longitude:", officeLongitude); // Debugging log
 
             const distance = calculateDistance(latitude, longitude, officeLatitude, officeLongitude);
