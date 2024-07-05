@@ -1,21 +1,34 @@
-// firebase-config.js
-import { getAnalytics } from "firebase/analytics";
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-
 const firebaseConfig = {
-    apiKey: "AIzaSyB9wEGqEBhvqtYIaJL-BeOxIRdWlq908PM",
-    authDomain: "geov6-attendance.firebaseapp.com",
-    projectId: "geov6-attendance",
-    storageBucket: "geov6-attendance.appspot.com",
-    messagingSenderId: "302976092344",
-    appId: "1:302976092344:web:8be79ebf2635c429d30c4d",
-    measurementId: "G-Y5WM5JVVQ3"
+    apiKey: "AIzaSyBwSh1EQ3rrGrXQCLbW046SacohLgMwgrk",
+    authDomain: "geoatkt.firebaseapp.com",
+    databaseURL: "https://geoatkt-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "geoatkt",
+    storageBucket: "geoatkt.appspot.com",
+    messagingSenderId: "410244661766",
+    appId: "1:410244661766:web:481cc95b80bcf3a885b987",
+    measurementId: "G-C9HSEVJSY5"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
+// initialize firebase
+firebase.initializeApp(firebaseConfig);
+//reference for database
+var attendanceFormDB = firebase.database().ref('attendanceForm')
 
-export { analytics, app, db };
+document.getElementById("attendanceForm").addEventListener("submit", submitForm);
+
+
+function submitForm(e) {
+    e.preventDefault();
+
+    var name = getElementVal('employeeName');
+    var time = getElementVal('formattedDateTime');
+
+
+    console.log(name, formattedDateTime);
+
+}
+
+const getElementVal = (id) => {
+    return document.getElementById(id).ariaValueMax;
+
+}
