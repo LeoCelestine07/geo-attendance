@@ -14,23 +14,26 @@
 <body>
     <div class="container">
         <h1>Knockturn Geo Attendance - V6</h1>
-        <div class="form-group">
-            <label for="employee">Select Employee:</label>
-            <select id="employee">
-                <option value="" disabled selected>Select Employee</option>
-                <option value="Sumithra">Sumithra</option>
-                <option value="Sam Prakash">Sam Prakash</option>
-                <option value="Ranjith">Ranjith</option>
-                <option value="Leo Celestine">Leo Celestine</option>
-                <option value="Yuvaraj">Yuvaraj</option>
-                <option value="Pushpa">Pushpa</option>
-                <option value="Dennis">Dennis</option>
-            </select>
-        </div>
-        <button id="markAttendance">Mark Attendance</button>
-        <div id="status"></div>
+        <form id="attendanceForm">
+            <div class="form-group">
+                <label for="employeeName">Select Employee:</label>
+                <select id="employeeName">
+                    <option value="" disabled selected>Select Employee</option>
+                    <option value="Sumithra">Sumithra</option>
+                    <option value="Sam Prakash">Sam Prakash</option>
+                    <option value="Ranjith">Ranjith</option>
+                    <option value="Leo Celestine">Leo Celestine</option>
+                    <option value="Yuvaraj">Yuvaraj</option>
+                    <option value="Pushpa">Pushpa</option>
+                    <option value="Dennis">Dennis</option>
+                </select>
+            </div>
+            <button type="submit">Mark Attendance</button>
+            <div id="status"></div>
+        </form>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
     <script src="script.js"></script>
 </body>
 
