@@ -4,17 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Button</title>
+    <title>Knockturn Geo Attendance - V6</title>
     <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&family=Quicksand:wght@400;500&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
     <div class="container">
-        <h1>Test Button</h1>
-        <button id="testButton">Click Me</button>
+        <h1>Knockturn Geo Attendance - V6</h1>
+        <div class="form-group">
+            <label for="employee">Select Employee:</label>
+            <select id="employee">
+                <option value="" disabled selected>Select Employee</option>
+                <option value="Sumithra">Sumithra</option>
+                <option value="Sam Prakash">Sam Prakash</option>
+                <option value="Ranjith">Ranjith</option>
+                <option value="Leo Celestine">Leo Celestine</option>
+                <option value="Yuvaraj">Yuvaraj</option>
+                <option value="Pushpa">Pushpa</option>
+                <option value="Dennis">Dennis</option>
+            </select>
+        </div>
+        <button id="markAttendance">Mark Attendance</button>
         <div id="status"></div>
     </div>
-    <script src="test.js"></script>
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>
