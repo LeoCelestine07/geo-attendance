@@ -24,9 +24,10 @@ function submitForm(e) {
     var time = getElementVal('formattedDateTime');
 
 
-    console.log(name, formattedDateTime);
+    console.log(name, time);
 
 }
+
 
 const getElementVal = (id) => {
     return document.getElementById(id).ariaValueMax;
