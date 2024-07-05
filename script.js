@@ -1,3 +1,23 @@
+import { getAnalytics } from "firebase/analytics";
+import { initializeApp } from "firebase/app";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyB9wEGqEBhvqtYIaJL-BeOxIRdWlq908PM",
+    authDomain: "geov6-attendance.firebaseapp.com",
+    projectId: "geov6-attendance",
+    storageBucket: "geov6-attendance.appspot.com",
+    messagingSenderId: "302976092344",
+    appId: "1:302976092344:web:8be79ebf2635c429d30c4d",
+    measurementId: "G-Y5WM5JVVQ3"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
+
 document.getElementById('markAttendance').addEventListener('click', () => {
     const employeeSelect = document.getElementById('employee');
     const employeeName = employeeSelect.value;
@@ -14,7 +34,7 @@ document.getElementById('markAttendance').addEventListener('click', () => {
 
     navigator.geolocation.getCurrentPosition(success, error);
 
-    function success(position) {
+    async function success(position) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
@@ -28,6 +48,19 @@ document.getElementById('markAttendance').addEventListener('click', () => {
             const now = new Date();
             const formattedDateTime = now.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
             document.getElementById('status').innerText = `${employeeName} marked present on ${formattedDateTime}`;
+
+            // Save to Firestore
+            try {
+                const docRef = await addDoc(collection(db, "attendance"), {
+                    name: employeeName,
+                    timestamp: now,
+                    latitude: latitude,
+                    longitude: longitude
+                });
+                console.log("Document written with ID: ", docRef.id);
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
         } else {
             document.getElementById('status').innerText = 'You are not within the required location radius.';
         }
@@ -40,7 +73,7 @@ document.getElementById('markAttendance').addEventListener('click', () => {
     function calculateDistance(lat1, lon1, lat2, lon2) {
         const R = 6371; // Radius of the Earth in km
         const dLat = degreesToRadians(lat2 - lat1);
-        const dLon = degreesToRadians(lon2 - lon1);
+        const dLon = degreesToRadians(lat2 - lon1);
         const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
             Math.cos(degreesToRadians(lat1)) * Math.cos(degreesToRadians(lat2)) *
             Math.sin(dLon / 2) * Math.sin(dLon / 2);
@@ -52,4 +85,3 @@ document.getElementById('markAttendance').addEventListener('click', () => {
         return degrees * (Math.PI / 180);
     }
 });
-
