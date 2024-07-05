@@ -28,13 +28,13 @@ function submitForm(e) {
 
     saveMessages(name, time);
 
-    // Show alert
-    document.querySelector('.alert').style.display = 'block';
+    // Show alert (if you have a div with class 'alert', otherwise skip this)
+    // document.querySelector('.alert').style.display = 'block';
 
-    // Hide alert after 3 seconds
-    setTimeout(() => {
-        document.querySelector('.alert').style.display = 'none';
-    }, 3000);
+    // Hide alert after 3 seconds (if you have a div with class 'alert', otherwise skip this)
+    // setTimeout(() => {
+    //     document.querySelector('.alert').style.display = 'none';
+    // }, 3000);
 
     // Clear form
     document.getElementById("attendanceForm").reset();
