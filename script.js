@@ -1,55 +1,41 @@
-document.getElementById('markAttendance').addEventListener('click', () => {
-    const employeeSelect = document.getElementById('employee');
-    const employeeName = employeeSelect.value;
+document.addEventListener('DOMContentLoaded', () => {
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBwSh1EQ3rrGrXQCLbW046SacohLgMwgrk",
+        authDomain: "geoatkt.firebaseapp.com",
+        databaseURL: "https://geoatkt-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "geoatkt",
+        storageBucket: "geoatkt.appspot.com",
+        messagingSenderId: "410244661766",
+        appId: "1:410244661766:web:481cc95b80bcf3a885b987",
+        measurementId: "G-C9HSEVJSY5"
+    };
 
-    if (!employeeName) {
-        document.getElementById('status').innerText = 'Please select an employee.';
-        return;
-    }
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
 
-    if (!navigator.geolocation) {
-        alert('Geolocation is not supported by your browser');
-        return;
-    }
+    // Reference for database
+    var attendanceFormDB = firebase.database().ref('attendanceForm');
 
-    navigator.geolocation.getCurrentPosition(success, error);
+    document.getElementById("attendanceForm").addEventListener("submit", submitForm);
 
-    function success(position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
+    function submitForm(e) {
+        e.preventDefault();
 
-        // Office coordinates
-        const officeLatitude = 12.913278;
-        const officeLongitude = 80.194500;
+        var name = getElementVal('employeeName');
+        var time = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
-        const distance = calculateDistance(latitude, longitude, officeLatitude, officeLongitude);
+        console.log(name, time);
 
-        if (distance <= 1) { // 1 km radius
-            const now = new Date();
-            const formattedDateTime = now.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-            document.getElementById('status').innerText = `${employeeName} marked present on ${formattedDateTime}`;
-        } else {
-            document.getElementById('status').innerText = 'You are not within the required location radius.';
-        }
-    }
+        saveMessages(name, time);
 
-    function error() {
-        alert('Unable to retrieve your location');
-    }
+        // Show alert
+        document.querySelector('.alert').style.display = 'block';
 
-    function calculateDistance(lat1, lon1, lat2, lon2) {
-        const R = 6371; // Radius of the Earth in km
-        const dLat = degreesToRadians(lat2 - lat1);
-        const dLon = degreesToRadians(lon2 - lon1);
-        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(degreesToRadians(lat1)) * Math.cos(degreesToRadians(lat2)) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c;
-    }
+        // Hide alert after 3 seconds
+        setTimeout(() => {
+            document.querySelector('.alert').style.display = 'none';
+        }, 3000);
 
-    function degreesToRadians(degrees) {
-        return degrees * (Math.PI / 180);
-    }
-});
-
+        // Clear form
+        document.getElementById("attendanceForm").​⬤
