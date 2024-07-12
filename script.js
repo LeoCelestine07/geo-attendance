@@ -1,76 +1,92 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('markAttendance').addEventListener('click', (e) => {
+    const firebaseConfig = {
+        apiKey: "AIzaSyBwSh1EQ3rrGrXQCLbW046SacohLgMwgrk",
+        authDomain: "geoatkt.firebaseapp.com",
+        databaseURL: "https://geoatkt-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "geoatkt",
+        storageBucket: "geoatkt.appspot.com",
+        messagingSenderId: "410244661766",
+        appId: "1:410244661766:web:481cc95b80bcf3a885b987",
+        measurementId: "G-C9HSEVJSY5"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
+
+    const loginForm = document.getElementById('loginForm');
+    const attendanceForm = document.getElementById('attendanceForm');
+    const loginSection = document.getElementById('loginSection');
+    const attendanceSection = document.getElementById('attendanceSection');
+    const adminSection = document.getElementById('adminSection');
+    const statusDiv = document.getElementById('status');
+    const loginStatus = document.getElementById('loginStatus');
+
+    loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        console.log("Mark Attendance button clicked");
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-        const employeeSelect = document.getElementById('employeeName');
-        const employeeName = employeeSelect ? employeeSelect.value : null;
-
-        if (!employeeName) {
-            console.log("Employee name not selected");
-            document.getElementById('status').innerText = 'Please select an employee.';
-            return;
-        }
-
-        if (!navigator.geolocation) {
-            alert('Geolocation is not supported by your browser');
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(success, error);
-
-        function success(position) {
-            console.log("Geolocation success");
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            console.log("Latitude:", latitude, "Longitude:", longitude);
-
-            //office coordinates
-            const officeLatitude = 12.91331;
-            const officeLongitude = 80.19456;
-            console.log("Office Latitude:", officeLatitude, "Office Longitude:", officeLongitude);
-
-            const distance = calculateDistance(latitude, longitude, officeLatitude, officeLongitude);
-            console.log("Calculated Distance:", distance);
-
-            if (distance <= 1) { // 1 km radius
-                const now = new Date();
-                const formattedDateTime = now.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-                document.getElementById('status').innerText = `${employeeName} marked present on ${formattedDateTime}`;
-
-                // Saving to Firebase
-                saveMessages(employeeName, formattedDateTime);
-            } else {
-                document.getElementById('status').innerText = 'You are not within the required location radius.';
-            }
-        }
-
-        function error() {
-            console.log("Geolocation error");
-            alert('Unable to retrieve your location');
-        }
-
-        function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371; // Radius of the Earth in km
-            const dLat = degreesToRadians(lat2 - lat1);
-            const dLon = degreesToRadians(lon2 - lon1);
-            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(degreesToRadians(lat1)) * Math.cos(degreesToRadians(lat2)) *
-                Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            return R * c;
-        }
-
-        function degreesToRadians(degrees) {
-            return degrees * (Math.PI / 180);
-        }
+        auth.signInWithEmailAndPassword(email, password)
+            .then(userCredential => {
+                const user = userCredential.user;
+                checkUserRole(user.uid);
+            })
+            .catch(error => {
+                loginStatus.innerText = error.message;
+            });
     });
 
-    function saveMessages(name, time) {
-        var newAttendanceForm = firebase.database().ref('attendanceForm').push();
+    const checkUserRole = (uid) => {
+        database.ref('users/' + uid).once('value').then(snapshot => {
+            const role = snapshot.val().role;
+            const name = snapshot.val().name;
+            if (role === 'admin') {
+                showAdminDashboard();
+            } else {
+                showStaffPage(name);
+            }
+        });
+    };
+
+    const showAdminDashboard = () => {
+        loginSection.style.display = 'none';
+        adminSection.style.display = 'block';
+        fetchAllAttendanceRecords();
+    };
+
+    const showStaffPage = (name) => {
+        loginSection.style.display = 'none';
+        attendanceSection.style.display = 'block';
+        document.getElementById('employeeName').value = name;
+    };
+
+    const fetchAllAttendanceRecords = () => {
+        database.ref('attendanceForm').once('value').then(snapshot => {
+            const records = snapshot.val();
+            const recordsDiv = document.getElementById('attendanceRecords');
+            recordsDiv.innerHTML = '';
+            for (let key in records) {
+                const record = records[key];
+                recordsDiv.innerHTML += `<p>${record.name}: ${record.time}</p>`;
+            }
+        });
+    };
+
+    attendanceForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('employeeName').value;
+        const time = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+        saveMessages(name, time);
+        statusDiv.innerText = `${name} marked present on ${time}`;
+        attendanceForm.reset();
+    });
+
+    const saveMessages = (name, time) => {
+        const newAttendanceForm = database.ref('attendanceForm').push();
         newAttendanceForm.set({
             name: name,
             time: time,
         });
-    }
+    };
 });
