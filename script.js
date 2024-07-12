@@ -23,22 +23,22 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("Geolocation success");
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
-            console.log("Latitude:", latitude, "Longitude:", longitude); // Debugging log
+            console.log("Latitude:", latitude, "Longitude:", longitude);
 
-            // Office coordinates
-            const officeLatitude = 12.931149;
-            const officeLongitude = 80.179004;
-            console.log("Office Latitude:", officeLatitude, "Office Longitude:", officeLongitude); // Debugging log
+            //office coordinates
+            const officeLatitude = 12.91331;
+            const officeLongitude = 80.19456;
+            console.log("Office Latitude:", officeLatitude, "Office Longitude:", officeLongitude);
 
             const distance = calculateDistance(latitude, longitude, officeLatitude, officeLongitude);
-            console.log("Calculated Distance:", distance); // Debugging log
+            console.log("Calculated Distance:", distance);
 
             if (distance <= 1) { // 1 km radius
                 const now = new Date();
                 const formattedDateTime = now.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
                 document.getElementById('status').innerText = `${employeeName} marked present on ${formattedDateTime}`;
 
-                // Save to Firebase
+                // Saving to Firebase
                 saveMessages(employeeName, formattedDateTime);
             } else {
                 document.getElementById('status').innerText = 'You are not within the required location radius.';
