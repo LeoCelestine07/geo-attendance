@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knockturn Geo Attendance - V6</title>
+    <title>Knockturn Geo Attendance - #V6</title>
     <link rel="stylesheet" href="styles.css">
     <link
         href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&family=Quicksand:wght@400;500&display=swap"
@@ -13,35 +13,26 @@
 
 <body>
     <div class="container">
-        <h1>Knockturn Geo Attendance</h1>
-        <div id="loginSection">
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" required>
-                </div>
-                <button type="submit">Login</button>
-                <div id="loginStatus"></div>
-            </form>
-        </div>
-        <div id="attendanceSection" style="display:none;">
-            <form id="attendanceForm">
-                <input type="hidden" id="employeeName">
-                <button id="markAttendance" type="submit">Mark Attendance</button>
-                <div id="status"></div>
-            </form>
-        </div>
-        <div id="adminSection" style="display:none;">
-            <h2>Admin Dashboard</h2>
-            <div id="attendanceRecords"></div>
-        </div>
+        <h1>Knockturn Geo Attendance - V6</h1>
+        <form id="attendanceForm">
+            <div class="form-group">
+                <label for="employeeName">Select Employee:</label>
+                <select id="employeeName">
+                    <option value="" disabled selected>Select Employee</option>
+                    <option value="Sumithra">Sumithra</option>
+                    <option value="Sam Prakash">Sam Prakash</option>
+                    <option value="Ranjith">Ranjith</option>
+                    <option value="Leo Celestine">Leo Celestine</option>
+                    <option value="Yuvaraj">Yuvaraj</option>
+                    <option value="Pushpa">Pushpa</option>
+                    <option value="Dennis">Dennis</option>
+                </select>
+            </div>
+            <button id="markAttendance" type="submit">Mark Attendance</button>
+            <div id="status"></div>
+        </form>
     </div>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="script.js"></script>
