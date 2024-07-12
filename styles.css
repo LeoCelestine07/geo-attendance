@@ -37,7 +37,6 @@ label {
     font-size: 16px;
 }
 
-input,
 select {
     width: 100%;
     padding: 10px;
@@ -47,6 +46,17 @@ select {
     color: #fff;
     font-size: 16px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 16px;
+}
+
+select::-ms-expand {
+    display: none;
 }
 
 button {
@@ -65,8 +75,7 @@ button:hover {
     background-color: #00243b;
 }
 
-#status,
-#loginStatus {
+#status {
     margin-top: 20px;
     font-size: 14px;
 }
